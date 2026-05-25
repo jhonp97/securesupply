@@ -1,0 +1,18 @@
+// ─────────────────────────────────────────────
+// Esquema de Prisma — SecureSupply API
+// ─────────────────────────────────────────────
+// La URL de conexión se define en prisma.config.ts
+// via env('DATABASE_URL'). NO incluir url aquí.
+// Se usa adapter-pg (driver adapter nativo).
+// ─────────────────────────────────────────────
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  adapter  = "pg"
+  // url NO se define aquí — se gestiona en prisma.config.ts
+}

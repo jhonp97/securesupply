@@ -1,0 +1,42 @@
+# ─────────────────────────────────────────────
+# Docker Compose — SecureSupply Tests
+# ─────────────────────────────────────────────
+# Entorno efímero para CI y tests locales.
+# Sin volúmenes persistentes — cada ejecución
+# arranca desde cero.
+# ─────────────────────────────────────────────
+
+services:
+  # ── Base de datos para tests ──
+  postgres:
+    image: postgres:17-alpine
+    container_name: securesupply-test-postgres
+    restart: "no"
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: securesupply
+      POSTGRES_PASSWORD: securesupply_test
+      POSTGRES_DB: securesupply_test
+    tmpfs: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U securesupply -d securesupply_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  # ── Redis para tests ──
+  redis:
+    image: redis:8-alpine
+    container_name: securesupply-test-redis
+    restart: "no"
+    ports:
+      - "6380:6379"
+    tmpfs: /data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 10
+      start_period: 5s

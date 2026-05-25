@@ -1,0 +1,55 @@
+# ─────────────────────────────────────────────
+# E2E — SecureSupply (Playwright)
+# ─────────────────────────────────────────────
+# Se ejecuta en merge a main (es costoso).
+# Ejecuta tests end-to-end contra el stack completo.
+# ─────────────────────────────────────────────
+
+name: E2E
+
+on:
+  push:
+    branches: [main]
+
+env:
+  NODE_VERSION: "24.16.0"
+  PNPM_VERSION: "11.3.0"
+
+jobs:
+  e2e:
+    name: E2E Tests (Playwright)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Instalar Playwright browsers
+        run: pnpm --filter @securesupply/web exec playwright install --with-deps chromium
+
+      - name: Build
+        run: pnpm -r build
+
+      # TODO: Iniciar servicios Docker para E2E
+      # - name: Start Docker services
+      #   run: docker compose -f docker-compose.test.yml up -d
+
+      # TODO: Ejecutar tests E2E
+      # - name: Run E2E tests
+      #   run: pnpm test:e2e
+
+      - name: E2E placeholder
+        run: echo "E2E tests se implementarán en Phase 2 del roadmap"

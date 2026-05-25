@@ -1,0 +1,35 @@
+{
+  "name": "@securesupply/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SecureSupply — API REST con NestJS 11",
+  "scripts": {
+    "start": "node dist/main.js",
+    "dev": "nest start --watch",
+    "build": "nest build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nestjs/common": "11.1.24",
+    "@nestjs/core": "11.1.24",
+    "@nestjs/jwt": "11.0.2",
+    "@nestjs/platform-express": "11.1.24",
+    "@nestjs/swagger": "11.4.4",
+    "@nestjs/throttler": "6.5.0",
+    "@prisma/adapter-pg": "7.8.0",
+    "@prisma/client": "7.8.0",
+    "helmet": "8.2.0",
+    "pg": "8.21.0",
+    "pino": "10.3.1",
+    "pino-http": "11.0.0",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "11.0.21",
+    "@nestjs/schematics": "11.1.0",
+    "@types/express": "5.0.3",
+    "@types/node": "24.1.0"
+  }
+}

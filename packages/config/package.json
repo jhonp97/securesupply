@@ -1,0 +1,34 @@
+{
+  "name": "@securesupply/config",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Configuración validada con Zod para SecureSupply",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./env.schema": {
+      "types": "./dist/env.schema.d.ts",
+      "import": "./dist/env.schema.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@securesupply/tsconfig": "workspace:*",
+    "typescript": "6.0.3"
+  }
+}

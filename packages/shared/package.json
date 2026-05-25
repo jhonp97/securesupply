@@ -1,0 +1,27 @@
+{
+  "name": "@securesupply/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Utilidades compartidas de SecureSupply",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint src/"
+  },
+  "devDependencies": {
+    "@securesupply/tsconfig": "workspace:*",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@securesupply/types",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Schemas Zod y tipos compartidos de SecureSupply",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "npx --yes tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@securesupply/tsconfig": "workspace:*",
+    "typescript": "6.0.3"
+  }
+}

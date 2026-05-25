@@ -1,0 +1,31 @@
+{
+  "name": "securesupply",
+  "private": true,
+  "version": "0.1.0",
+  "description": "SecureSupply — plataforma de análisis de seguridad en cadena de suministro",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "format": "turbo run format",
+    "test": "turbo run test",
+    "test:scaffold": "vitest run tests/scaffold.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "24.1.0",
+    "prettier": "3.8.3",
+    "turbo": "2.9.14",
+    "typescript": "6.0.3",
+    "vitest": "3.2.4"
+  },
+  "packageManager": "pnpm@11.3.0",
+  "engines": {
+    "node": ">=24.16.0 <25.0.0",
+    "pnpm": ">=11"
+  }
+}

@@ -1,0 +1,98 @@
+# ─────────────────────────────────────────────
+# Docker Compose — SecureSupply (Desarrollo Local)
+# ─────────────────────────────────────────────
+# Servicios: postgres (BD), redis (cache/colas),
+# api (NestJS), worker (BullMQ), web (Next.js)
+# ─────────────────────────────────────────────
+
+volumes:
+  pgdata:
+    driver: local
+
+services:
+  # ── Base de datos principal ──
+  postgres:
+    image: postgres:17-alpine
+    container_name: securesupply-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: securesupply
+      POSTGRES_PASSWORD: securesupply_dev
+      POSTGRES_DB: securesupply
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U securesupply -d securesupply"]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
+  # ── Cache y colas (BullMQ) ──
+  redis:
+    image: redis:8-alpine
+    container_name: securesupply-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
+  # ── API REST (NestJS 11) ──
+  api:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/api.Dockerfile
+    container_name: securesupply-api
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://securesupply:securesupply_dev@postgres:5432/securesupply
+      REDIS_URL: redis://redis:6379
+      FRONTEND_URL: http://localhost:3000
+      PORT: "4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ── Worker de análisis (BullMQ) ──
+  worker:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/worker.Dockerfile
+    container_name: securesupply-worker
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://securesupply:securesupply_dev@postgres:5432/securesupply
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ── Frontend (Next.js 16) ──
+  web:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/web.Dockerfile
+    container_name: securesupply-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+    depends_on:
+      - api
