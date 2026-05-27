@@ -7,18 +7,25 @@
     "start": "node dist/main.js",
     "dev": "nest start --watch",
     "build": "nest build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@nestjs/common": "11.1.24",
     "@nestjs/core": "11.1.24",
     "@nestjs/jwt": "11.0.2",
+    "@nestjs/passport": "11.0.5",
     "@nestjs/platform-express": "11.1.24",
     "@nestjs/swagger": "11.4.4",
     "@nestjs/throttler": "6.5.0",
     "@prisma/adapter-pg": "7.8.0",
     "@prisma/client": "7.8.0",
+    "bcrypt": "5.1.1",
+    "cookie-parser": "1.4.7",
     "helmet": "8.2.0",
+    "jsonwebtoken": "9.0.2",
+    "passport": "0.7.0",
+    "passport-jwt": "4.0.1",
     "pg": "8.21.0",
     "pino": "10.3.1",
     "pino-http": "11.0.0",
@@ -29,8 +36,13 @@
   "devDependencies": {
     "@nestjs/cli": "11.0.21",
     "@nestjs/schematics": "11.1.0",
+    "@nestjs/testing": "11.1.24",
+    "@types/bcrypt": "5.0.2",
+    "@types/cookie-parser": "1.4.8",
     "@types/express": "5.0.3",
+    "@types/jsonwebtoken": "9.0.9",
     "@types/node": "24.1.0",
+    "@types/passport-jwt": "4.0.1",
     "@types/pg": "8.20.0",
     "prisma": "7.8.0"
   }

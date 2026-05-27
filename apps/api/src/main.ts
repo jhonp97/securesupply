@@ -16,6 +16,7 @@ import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 import helmet from "helmet";
 import pinoHttp from "pino-http";
 import pino from "pino";
+import cookieParser from "cookie-parser";
 import { RequestIdMiddleware } from "./common/middleware/request-id.middleware";
 import { GlobalExceptionFilter } from "./common/filters/global-exception.filter";
 
@@ -73,6 +74,9 @@ async function bootstrap() {
     credentials: true,
     maxAge: 86400,
   });
+
+  // ── Cookie parser para leer refresh_token ──
+  app.use(cookieParser());
 
   // ── Logger HTTP con redacción ──
   app.use(
