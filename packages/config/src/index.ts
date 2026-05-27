@@ -17,10 +17,11 @@ export function loadEnv(): Env {
       .map((issue) => `  - ${issue.path.join(".")}: ${issue.message}`)
       .join("\n");
 
-    throw new Error(
+    console.error(
       `\n❌ Error de configuración — variables de entorno inválidas:\n${issues}\n\n` +
         "Revisa tu archivo .env o las variables del entorno.",
     );
+    process.exit(1);
   }
 
   return result.data;

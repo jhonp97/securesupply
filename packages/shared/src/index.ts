@@ -50,7 +50,7 @@ export function calculateRiskScore(
 export function isValidRepositoryPath(path: string): boolean {
   // Solo permite caracteres alfanuméricos, guiones, guiones bajos y slashes
   // Rechaza ".." y caracteres especiales peligrosos
-  const SAFE_PATH_REGEX = /^[a-zA-Z0-9_\-/]+$/;
+  const SAFE_PATH_REGEX = /^[a-zA-Z0-9_.\-/]+$/;
   return SAFE_PATH_REGEX.test(path) && !path.includes("..");
 }
 

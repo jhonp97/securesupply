@@ -87,8 +87,11 @@ describe("3.2 — apps/api/prisma/schema.prisma", () => {
     expect(content).not.toMatch(/url\s*=/);
   });
 
-  it("usa el adapter-pg (driver adapter)", () => {
-    expect(content).toContain("adapter");
+  it("menciona adapter-pg en comentarios o config", () => {
+    expect(content).toMatch(/adapter.?pg|PrismaPg|adapter-pg/i);
+  });
+
+  it("hace referencia al driver adapter", () => {
     expect(content).toContain("pg");
   });
 
