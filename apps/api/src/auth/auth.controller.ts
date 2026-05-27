@@ -13,6 +13,7 @@ import {
   Res,
   HttpCode,
   HttpStatus,
+  Inject,
   UsePipes,
 } from "@nestjs/common";
 import { Request, Response } from "express";
@@ -23,7 +24,9 @@ import { ZodValidationPipe } from "../common/pipes/zod-validation.pipe";
 
 @Controller("auth")
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    @Inject(AuthService) private readonly authService: AuthService,
+  ) {}
 
   @Post("register")
   @HttpCode(HttpStatus.CREATED)

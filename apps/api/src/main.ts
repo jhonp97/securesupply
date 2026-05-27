@@ -9,6 +9,7 @@
 //   - Swagger UI en /api/docs
 // ─────────────────────────────────────────────
 
+import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { Logger, RequestMethod } from "@nestjs/common";

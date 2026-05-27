@@ -9,6 +9,7 @@ import {
   Injectable,
   CanActivate,
   ExecutionContext,
+  Inject,
   UnauthorizedException,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
@@ -16,7 +17,9 @@ import * as jwt from "jsonwebtoken";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(
+    @Inject(Reflector) private readonly reflector: Reflector,
+  ) {}
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();

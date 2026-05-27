@@ -11,10 +11,13 @@ allowBuilds:
   '@prisma/engines': true
   '@scarf/scarf': false
   bcrypt: true
+  cpu-features: true
   esbuild: true
   msgpackr-extract: true
   prisma: true
+  protobufjs: true
   sharp: true
+  ssh2: true
 minimumReleaseAgeExclude:
   - '@typescript-eslint/eslint-plugin@8.60.0'
   - '@typescript-eslint/parser@8.60.0'
@@ -31,3 +34,6 @@ minimumReleaseAgeExclude:
   - '@nestjs/core@11.1.24'
   - '@nestjs/platform-express@11.1.24'
   - bullmq@5.77.3
+  - '@testcontainers/postgresql@12.0.1'
+  - '@testcontainers/redis@12.0.1'
+  - testcontainers@12.0.1

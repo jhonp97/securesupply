@@ -6,6 +6,7 @@
 
 import {
   Injectable,
+  Inject,
   ConflictException,
   UnauthorizedException,
 } from "@nestjs/common";
@@ -20,8 +21,8 @@ import type { Response } from "express";
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly prisma: PrismaService,
-    private readonly jwtService: JwtService,
+    @Inject(PrismaService) private readonly prisma: PrismaService,
+    @Inject(JwtService) private readonly jwtService: JwtService,
   ) {}
 
   // ── Registro de usuario ─────────────────────
