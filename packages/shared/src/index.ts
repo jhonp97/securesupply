@@ -20,6 +20,10 @@ export const RATE_LIMIT_MAX_REQUESTS = 100;
 /** Estados de escaneo que se consideran terminales */
 export const TERMINAL_SCAN_STATUSES = ["COMPLETED", "FAILED", "CANCELLED"] as const;
 
+// ── Re-exportaciones ──
+
+export { validateGitHubUrl } from "./url-validator.js";
+
 // ── Utilidades ──
 
 /**
