@@ -1,14 +1,14 @@
 // ─────────────────────────────────────────────
-// ScanModule — Stub del módulo de escaneo
-// Provee la cola BullMQ para encolar trabajos.
-// La implementación completa del worker se
-// realizará en PR #3 (Scan Job Orchestration).
+// ScanModule — Módulo de escaneo
+// Provee la cola BullMQ y ScanQueueService
+// para orquestar trabajos de escaneo.
 // ─────────────────────────────────────────────
 
 import { Module, Global } from "@nestjs/common";
 import { Queue } from "bullmq";
 import { RedisService } from "../redis/redis.service";
 import { SCAN_QUEUE } from "../github/webhook.controller";
+import { ScanQueueService } from "./scan-queue.service";
 
 /** Nombre de la cola de escaneos en BullMQ */
 const SCAN_QUEUE_NAME = "scan-jobs";
@@ -37,7 +37,8 @@ function scanQueueFactory(redisService: RedisService): Queue {
       useFactory: scanQueueFactory,
       inject: [RedisService],
     },
+    ScanQueueService,
   ],
-  exports: [SCAN_QUEUE],
+  exports: [SCAN_QUEUE, ScanQueueService],
 })
 export class ScanModule {}
