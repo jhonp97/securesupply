@@ -6,6 +6,7 @@
 //   - Pino logger con redacción de campos sensibles
 //   - Middleware de Request ID (UUID v4)
 //   - Filtro global de excepciones
+//   - Raw body parser para webhooks (HMAC verification)
 //   - Swagger UI en /api/docs
 // ─────────────────────────────────────────────
 
@@ -42,8 +43,10 @@ async function bootstrap() {
     },
   });
 
+  // ── rawBody: true habilita req.rawBody para verificación HMAC de webhooks ──
   const app = await NestFactory.create(AppModule, {
     logger: ["log", "error", "warn", "debug", "verbose"],
+    rawBody: true,
   });
 
   // ── Seguridad: Helmet con protección avanzada ──
@@ -107,8 +110,12 @@ async function bootstrap() {
   SwaggerModule.setup("api/docs", app, document);
 
   // ── Prefijo global ──
+  // Se excluyen health (monitoreo) y webhooks (GitHub envía a URL fija)
   app.setGlobalPrefix("api", {
-    exclude: [{ path: "health", method: RequestMethod.GET }],
+    exclude: [
+      { path: "health", method: RequestMethod.GET },
+      { path: "webhooks/github", method: RequestMethod.POST },
+    ],
   });
 
   const port = process.env.PORT || 4000;
