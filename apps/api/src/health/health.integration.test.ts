@@ -16,7 +16,19 @@ import { AppModule } from "../app.module";
 import cookieParser from "cookie-parser";
 import request from "supertest";
 
-describe("Integración: Auth + Health (contenedores reales)", () => {
+function isDockerAvailable(): boolean {
+  try {
+    execSync("docker info", { stdio: "pipe", timeout: 5000 });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const dockerAvailable = isDockerAvailable();
+const describeFn = dockerAvailable ? describe : describe.skip;
+
+describeFn("Integración: Auth + Health (contenedores reales)", () => {
   let pgContainer: Awaited<ReturnType<PostgreSqlContainer["start"]>>;
   let redisContainer: Awaited<ReturnType<RedisContainer["start"]>>;
   let app: INestApplication;
